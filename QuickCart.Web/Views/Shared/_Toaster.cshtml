@@ -1,0 +1,32 @@
+﻿@if (TempData["createMesage"] != null)
+{
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script  type="text/javascript">
+        toastr.success("@TempData["createMesage"]")
+
+    </script>
+}
+
+@if (TempData["editMesage"] != null)
+{
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.info("@TempData["editMesage"]")
+   
+
+    </script>
+}
+@if (TempData["deleteMesage"] != null)
+{
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.error("@TempData["deleteMesage"]")
+
+    </script>
+}
