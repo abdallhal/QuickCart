@@ -5,8 +5,9 @@ using QuickCart.Domain.DTO;
 using QuickCart.Domain.Models;
 using QuickCart.Services;
 
-namespace QuickCart.Web.Controllers
+namespace QuickCart.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly QuickCartDbContext _context;
@@ -14,7 +15,7 @@ namespace QuickCart.Web.Controllers
         private readonly IMapper _mapper;
 
         private readonly ICategoryService _service;
-        public CategoryController(QuickCartDbContext context,IMapper mapper, ICategoryService service)
+        public CategoryController(QuickCartDbContext context, IMapper mapper, ICategoryService service)
         {
             _context = context;
             _mapper = mapper;
@@ -38,7 +39,7 @@ namespace QuickCart.Web.Controllers
 
             if (ModelState.IsValid)
             {
-              var result=  _service.Create(categoryDto);
+                var result = _service.Create(categoryDto);
                 if (result.Success)
                 {
                     TempData["createMesage"] = "Item created successfully!";
@@ -55,7 +56,7 @@ namespace QuickCart.Web.Controllers
 
         public IActionResult Edit(int id)
         {
-  
+
             var result = _service.FirstOrDefault(id);
             if (result.Success)
             {
@@ -76,7 +77,7 @@ namespace QuickCart.Web.Controllers
             {
 
 
-               var result= _service.Update(categoryDTO);
+                var result = _service.Update(categoryDTO);
 
                 if (result.Success)
                 {
@@ -108,17 +109,17 @@ namespace QuickCart.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteCategory( int id)
+        public IActionResult DeleteCategory(int id)
         {
 
             var category = _service.FirstOrDefault(id);
 
-            if (category==null)
+            if (category == null)
             {
                 return NotFound();
             }
             _service.Delete(id);
-            TempData["deleteMesage"] = "Item deleted."; 
+            TempData["deleteMesage"] = "Item deleted.";
             return RedirectToAction(nameof(Index));
 
 
