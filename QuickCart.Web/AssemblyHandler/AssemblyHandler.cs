@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿
 using QuickCart.Repo;
+using QuickCart.Repo.Repositories;
 using QuickCart.Services;
 
 namespace QuickCart.Web.AssemblyHandler
@@ -23,11 +24,14 @@ namespace QuickCart.Web.AssemblyHandler
             // Services
 
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ISubCategoryService, SubCategoryService>();
             // Repository
 
             services.AddTransient<ICategoryRepository, CategoryRepository>();
 
-            //
+            services.AddTransient<ISubCategoryRepository, SubCategoryRepository>();
+
+            // 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
 

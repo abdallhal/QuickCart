@@ -1,5 +1,5 @@
 ﻿
-namespace QuickCart.Domain.DTO.SubCategory
+namespace QuickCart.Domain.DTO
 {
     public class SubCategoryDTO
     {

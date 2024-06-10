@@ -9,7 +9,7 @@ namespace QuickCart.Domain.Models
         [Required]
         public string Name { get; set; }
         public string Description { get; set; } 
-       // public virtual ICollection<SubCategory> Subcategories { get; set; }= new HashSet<SubCategory>();    
+       public virtual ICollection<SubCategory> Subcategories { get; set; }= new HashSet<SubCategory>();    
 
 
     }

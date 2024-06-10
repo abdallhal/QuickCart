@@ -1,16 +1,14 @@
-﻿@model Category;
+﻿@model SubCategoryDTO;
 
 @{
-    ViewBag.PageTitle = "Category Mangment";
-    ViewBag.CardTitle = "Create ";
+    ViewBag.PageTitle = "Sub Category Mangment";
+    ViewBag.CardTitle = "Edit ";
     Layout = "~/Views/Shared/_Dashboard.cshtml";
 }
 
-
 <div class="row">
-
     <div class="col-md-4">
-        <form asp-action="Create" method="post">
+        <form asp-action="Edit" method="post">
 
             <input hidden asp-for="Id" />
             <div class="mb-3">
@@ -27,15 +25,15 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="mb-3 form-group">
-                <input type="submit" class="btn btn-primary" value="Create" />
+                <input type="submit" class="btn btn-primary" value="Edit" />
 
                 <a asp-action="Index" asp-controller="SubCategory" class="btn btn-warning">Back to list</a>
             </div>
         </form>
-
     </div>
 </div>
 
-@section Scripts{
+
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

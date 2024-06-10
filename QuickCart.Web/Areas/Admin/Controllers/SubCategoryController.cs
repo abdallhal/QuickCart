@@ -1,20 +1,14 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using QuickCart.DataAccess.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using QuickCart.Domain.DTO;
-using QuickCart.Domain.Models;
 using QuickCart.Services;
 
 namespace QuickCart.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryController : Controller
+    public class SubCategoryController : Controller
     {
-   
-      
-
-        private readonly ICategoryService _service;
-        public CategoryController( ICategoryService service)
+        private readonly ISubCategoryService _service;
+        public SubCategoryController(ISubCategoryService service)
         {
 
             _service = service;
@@ -27,17 +21,24 @@ namespace QuickCart.Web.Areas.Admin.Controllers
         public IActionResult Create()
         {
 
-            return View();
+            var createSubCategoryDTO = new CreateSubCategoryDTO();
+
+            createSubCategoryDTO.Categories = _service.GetAllCategory().Data.Select(c => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+            {
+                Text = c.Name,
+                Value= c.Id.ToString(), 
+            });
+            return View(createSubCategoryDTO);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CreateCategoryDTO categoryDto)
+        public IActionResult Create(CreateSubCategoryDTO subCategoryDTO)
         {
 
             if (ModelState.IsValid)
             {
-                var result = _service.Create(categoryDto);
+                var result = _service.Create(subCategoryDTO);
                 if (result.Success)
                 {
                     TempData["createMesage"] = "Item created successfully!";
@@ -45,10 +46,10 @@ namespace QuickCart.Web.Areas.Admin.Controllers
 
                 }
                 TempData["deleteMesage"] = result.Message;
-                return View(categoryDto);
+                return View(subCategoryDTO);
             }
 
-            return View(categoryDto);
+            return View(subCategoryDTO);
         }
 
 
@@ -69,7 +70,7 @@ namespace QuickCart.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(CategoryDTO categoryDTO)
+        public IActionResult Edit(SubCategoryDTO categoryDTO)
         {
             if (ModelState.IsValid)
             {
@@ -123,6 +124,5 @@ namespace QuickCart.Web.Areas.Admin.Controllers
 
 
         }
-
     }
 }

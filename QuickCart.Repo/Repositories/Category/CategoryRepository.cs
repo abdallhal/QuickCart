@@ -2,7 +2,7 @@
 using QuickCart.DataAccess.Models;
 using QuickCart.Domain.Models;
 
-namespace QuickCart.Repo
+namespace QuickCart.Repo.Repositories
 {
     public class CategoryRepository:BaseRepository<Category>,ICategoryRepository    
     {

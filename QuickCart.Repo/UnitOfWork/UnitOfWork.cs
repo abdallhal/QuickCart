@@ -1,5 +1,6 @@
 ﻿
 using QuickCart.DataAccess.Models;
+using QuickCart.Repo.Repositories;
 
 namespace QuickCart.Repo
 {
@@ -10,13 +11,17 @@ namespace QuickCart.Repo
 
         public ICategoryRepository Category { get; private set; }
 
-        public UnitOfWork(QuickCartDbContext context, ICategoryRepository category)
-        {
-            
+        public ISubCategoryRepository SubCategory { get; private set; }
+
+        public UnitOfWork(QuickCartDbContext context, ICategoryRepository category, ISubCategoryRepository subCategory) {
+
+
             _context = context;
             Category = category;
+            SubCategory = subCategory;
+
         }
-    
+
 
         public int Complete()
         {
