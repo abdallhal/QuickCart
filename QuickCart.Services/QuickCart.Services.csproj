@@ -10,8 +10,4 @@
     <ProjectReference Include="..\QuickCart.Repo\QuickCart.Repo.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="SubCategory\" />
-  </ItemGroup>
-
 </Project>
