@@ -38,73 +38,86 @@ namespace QuickCart.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                _service.Create(categoryDto);
-                TempData["createMesage"] = "Item created successfully!";
-                return RedirectToAction(nameof(Index));
-            }
-            return View(categoryDto);
+              var result=  _service.Create(categoryDto);
+                if (result.Success)
+                {
+                    TempData["createMesage"] = "Item created successfully!";
+                    return RedirectToAction(nameof(Index));
 
+                }
+                TempData["deleteMesage"] = result.Message;
+                return View(categoryDto);
+            }
+
+            return View(categoryDto);
         }
 
 
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null || id == 0)
+  
+            var result = _service.FirstOrDefault(id);
+            if (result.Success)
             {
-                return NotFound();
-
+                return View(result.Data);
             }
 
-            var category = _context.Categories.Find(id);
+            TempData["deleteMesage"] = result.Message;
+            return View();
 
-            return View(category);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Category category)
+        public IActionResult Edit(CategoryDTO categoryDTO)
         {
             if (ModelState.IsValid)
             {
-                _context.Categories.Update(category);
-                _context.SaveChanges();
 
-                TempData["editMesage"] = "Item edited successfully!";
-                return RedirectToAction(nameof(Index));
+
+               var result= _service.Update(categoryDTO);
+
+                if (result.Success)
+                {
+                    TempData["editMesage"] = "Item edited successfully!";
+                    return RedirectToAction(nameof(Index));
+
+                }
+
+
             }
-            return View(category);
+            return View(categoryDTO);
 
         }
 
 
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null || id == 0)
+            if (id == 0)
             {
                 return NotFound();
 
             }
 
-            var category = _context.Categories.Find(id);
+            var result = _service.FirstOrDefault(id);
 
-            return View(category);
+            return View(result.Data);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteCategory(int? id)
+        public IActionResult DeleteCategory( int id)
         {
 
-            var category = _context.Categories.Find(id);
+            var category = _service.FirstOrDefault(id);
 
             if (category==null)
             {
                 return NotFound();
             }
-            _context.Categories.Remove(category);
-            _context.SaveChanges();
+            _service.Delete(id);
             TempData["deleteMesage"] = "Item deleted."; 
             return RedirectToAction(nameof(Index));
 

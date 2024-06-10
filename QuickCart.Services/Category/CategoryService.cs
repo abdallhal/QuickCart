@@ -50,5 +50,39 @@ namespace QuickCart.Services
             return ServiceResponse<CreateCategoryDTO>.DeliverData(categoryDTO);
 
         }
+
+        public ServiceResponse<CategoryDTO> Update(CategoryDTO categoryDTO)
+        {
+        
+            var category = _unitOfWork.Category.FirstOrDefault(c => c.Id == categoryDTO.Id);
+
+            if (category==null)
+            {
+                return ServiceResponse<CategoryDTO>.ReportError("category is null");
+            }
+
+            _mapper.Map(categoryDTO,category);
+
+            _unitOfWork.Category.Update(category);
+            _unitOfWork.Complete();
+            return ServiceResponse<CategoryDTO>.DeliverData(categoryDTO);
+
+        }
+
+
+        public ServiceResponse<bool> Delete(int  id)
+        {
+
+            var category = _unitOfWork.Category.FirstOrDefault(c => c.Id == id);
+
+            if (category == null)
+            {
+                return ServiceResponse<bool>.ReportError("category is null");
+            }
+            _unitOfWork.Category.Remove(category);
+            _unitOfWork.Complete();
+            return ServiceResponse<bool>.DeliverData(true);
+
+        }
     }
 }
