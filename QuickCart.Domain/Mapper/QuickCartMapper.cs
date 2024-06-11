@@ -12,11 +12,15 @@ namespace QuickCart.Domain.Mapper
 
             // category
             CreateMap<Category, CreateCategoryDTO>().ReverseMap();
-            CreateMap<Category, SubCategoryDTO>().ReverseMap();
+            CreateMap<Category, CategoryDTO>().ReverseMap();
 
             // sub category
             CreateMap<SubCategory, CreateSubCategoryDTO>().ReverseMap();
             CreateMap<SubCategory, SubCategoryDTO>().ReverseMap();
+
+            // product 
+            CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<Product, CreateProductDTO>().ReverseMap();
         }
     }
 }
