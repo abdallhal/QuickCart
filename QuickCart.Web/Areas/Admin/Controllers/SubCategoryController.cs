@@ -21,14 +21,14 @@ namespace QuickCart.Web.Areas.Admin.Controllers
         public IActionResult Create()
         {
 
-            var createSubCategoryDTO = new CreateSubCategoryDTO();
+            var createSubCategoryVM = new CreateSubCategoryVM();
 
-            createSubCategoryDTO.Categories = _service.GetAllCategory().Data.Select(c => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+            createSubCategoryVM.Categories = _service.GetAllCategory().Data.Select(c => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
             {
                 Text = c.Name,
                 Value= c.Id.ToString(), 
             });
-            return View(createSubCategoryDTO);
+            return View(createSubCategoryVM);
         }
 
         [HttpPost]
@@ -43,7 +43,6 @@ namespace QuickCart.Web.Areas.Admin.Controllers
                 {
                     TempData["createMesage"] = "Item created successfully!";
                     return RedirectToAction(nameof(Index));
-
                 }
                 TempData["deleteMesage"] = result.Message;
                 return View(subCategoryDTO);

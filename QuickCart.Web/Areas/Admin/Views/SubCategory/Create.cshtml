@@ -1,4 +1,4 @@
-﻿@model CreateSubCategoryDTO;
+﻿@model CreateSubCategoryVM;
 
 @{
     ViewBag.PageTitle = "Sub Category Mangment";
@@ -15,27 +15,25 @@
 @*             <input hidden asp-for="Id" /> *@
             <div class="mb-3">
 
-                <label asp-for="Name"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="SubCategoryDTO.Name"></label>
+                <input asp-for="SubCategoryDTO.Name" class="form-control" />
+                <span asp-validation-for="SubCategoryDTO.Name" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
 
-                <label asp-for="Description"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="SubCategoryDTO.Description"></label>
+                <input asp-for="SubCategoryDTO.Description" class="form-control" />
+                <span asp-validation-for="SubCategoryDTO.Description" class="text-danger"></span>
             </div>
-@* 
+            <div class="mb-3 form-group">
+                <label for="SubCategoryDTO.CategoryId" class="form-label">Category</label>
+                <select id="SubCategoryDTO.CategoryId" name="SubCategoryDTO.CategoryId" class="form-control" aria-label="Select Category" asp-for="SubCategoryDTO.CategoryId" asp-items="Model.Categories">
+                    <option value="" selected disabled>-- Select Category --</option>
+                </select>
+                <span asp-validation-for="SubCategoryDTO.CategoryId" class="text-danger"></span>
+            </div>
 
-            <div class="mb-3">
-
-                <label asp-for="CategoryId"></label>
-               
-                <select asp-for="CategoryId" asp-items="Model.Categories"
-                ></select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div> *@
             <div class="mb-3 form-group">
                 <input type="submit" class="btn btn-primary" value="Create" />
 
