@@ -53,7 +53,7 @@ namespace QuickCart.DataAccess.Migrations
                         column: x => x.SubCategoryId,
                         principalTable: "SubCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -104,7 +104,7 @@ namespace QuickCart.DataAccess.Migrations
                 column: "CategoryId",
                 principalTable: "Categories",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
         }
     }
 }
