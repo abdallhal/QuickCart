@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QuickCart.Repo\QuickCart.Repo.csproj" />
+	  <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
+
+
 
 </Project>
