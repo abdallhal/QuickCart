@@ -13,13 +13,19 @@ namespace QuickCart.Repo
 
         public ISubCategoryRepository SubCategory { get; private set; }
 
-        public UnitOfWork(QuickCartDbContext context, ICategoryRepository category, ISubCategoryRepository subCategory) {
+        public IProductRepository Product { get; private set; }
+
+        public UnitOfWork(QuickCartDbContext context, 
+            ICategoryRepository category,
+            ISubCategoryRepository subCategory,
+            IProductRepository product)
+        {
 
 
             _context = context;
             Category = category;
             SubCategory = subCategory;
-
+            Product = product;
         }
 
 

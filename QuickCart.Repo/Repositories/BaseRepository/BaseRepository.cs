@@ -42,7 +42,7 @@ namespace QuickCart.Repo
         }
 
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? expression=null, params Expression<Func<T, object>>[]? includes )
+        public IQueryable<T> GetAll(Expression<Func<T, bool>>? expression=null, params Expression<Func<T, object>>[]? includes )
         {
             IQueryable<T> query = _dbSet;
             if (expression != null)

@@ -24,12 +24,19 @@ namespace QuickCart.Web.AssemblyHandler
             // Services
 
             services.AddTransient<ICategoryService, CategoryService>();
+                  
             services.AddTransient<ISubCategoryService, SubCategoryService>();
+
+            services.AddTransient<IProductService, ProductService>();
+
+            services.AddTransient<IFileService, FileService>();
             // Repository
 
             services.AddTransient<ICategoryRepository, CategoryRepository>();
 
             services.AddTransient<ISubCategoryRepository, SubCategoryRepository>();
+
+            services.AddTransient<IProductRepository, ProductRepository>();
 
             // 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();

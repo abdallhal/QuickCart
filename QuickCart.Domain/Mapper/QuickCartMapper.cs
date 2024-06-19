@@ -20,7 +20,10 @@ namespace QuickCart.Domain.Mapper
 
             // product 
             CreateMap<Product, ProductDTO>().ReverseMap();
-            CreateMap<Product, CreateProductDTO>().ReverseMap();
+            CreateMap<Product, ProductFormDTO>().ReverseMap();
+            CreateMap<Product, ProductFormDTO>()
+                .ForMember(dest => dest.FilesName, opt => opt.MapFrom(src => src.ProductImages.Select(pi => pi.ImageUrl).ToList()));
+
         }
     }
 }

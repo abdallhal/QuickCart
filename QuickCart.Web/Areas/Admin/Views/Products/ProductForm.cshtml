@@ -1,0 +1,144 @@
+﻿@model ProductFormDTO;
+
+@{
+    ViewBag.PageTitle = "Products Mangment";
+       ViewBag.CardTitle = (Model == null || Model.Id == 0) ? "Create" : "Edit";
+
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+<link href="~/css/site.css" rel="stylesheet" />
+
+<div class="content">
+    <input type="hidden" id="formMode" value="@ViewBag.CardTitle" />
+    <form asp-action="@ViewBag.CardTitle" method="post" enctype="multipart/form-data">
+
+
+        <div class="row">
+            <div class="col-md-4">
+
+                <div class="mb-3">
+
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+
+
+                <div class="mb-3">
+
+                    <label asp-for="Price"></label>
+                    <input asp-for="Price" type="number" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label asp-for="NewPrice"></label>
+                    <input asp-for="NewPrice" type="number" class="form-control" />
+                    <span asp-validation-for="NewPrice" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+
+                    <label asp-for="Description"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+
+
+
+                <div class="mb-3 form-group">
+                    @if(Model!=null){
+                        <input type="hidden" id="selectedCategoryId" value="@Model.CategoryId">
+                    }
+                  
+
+                    <label asp-for="CategoryId" class="col-form-label"></label>
+                    <select id="categoryList" asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(string.Empty,"Id","Name"))">
+                    </select>
+                    <span class="text-danger" asp-validation-for="CategoryId"></span>
+
+                </div>
+
+
+                <div class="mb-3 form-group">
+                    @if (Model != null)
+                    {
+                       <input type="hidden" id="selectedSubCategoryId" value="@Model.SubCategoryId">
+                        
+                    }
+                
+                    <label asp-for="SubCategoryId" class="col-form-label"></label>
+
+                    <select id="subCategoryList" asp-for="SubCategoryId" class="form-control" asp-items="@(new SelectList(string.Empty,"Id","Name"))">
+                        <option value="" selected disabled>-- Select Category --</option>
+                    </select>
+                    <span class="text-danger" asp-validation-for="SubCategoryId"></span>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-8 d-flex flex-column">
+                <div class="mb-3 d-flex align-items-center ">
+                    <label for="imagesInput" class="flex-grow-1 mr-2">Product Images:</label>
+                    <input type="file" name="Images" asp-for="Images" id="imagesInput" multiple class="form-control-file" accept="image/*">
+
+                    <span class="text-danger" asp-validation-for="Images"></span>
+                </div>
+                <small class="form-text text-muted">Select multiple images. You can change or remove images before submitting.</small>
+                <div class="container">
+                    <div class="row" id="selectedImagesContainer"></div>
+                </div>
+
+                @if (Model != null && Model.FilesName.Any())
+                {
+                    <hr />
+                    <div class="container">
+                        <h5>Current Images:</h5>
+                        <div class="row" id="currentImagesContainer">
+                            @foreach (var fileUrl in Model.FilesName)
+                            {
+                                <div class="mb-2 col-3 current-image-container" data-fileurl="@fileUrl">
+                                    <img class="img-thumbnail" src="@Url.Content("~/Images/Products/" + fileUrl)" style="max-width: 150px; max-height: 150px;" />
+                                    <button type="button" class="btn btn-sm btn-danger delete-current-image">Remove</button>
+                               
+                                </div>
+                            }
+                        </div>
+                        <input type="hidden" id="filesNameToRemove" name="FilesNameToRemove" asp-for="FilesNameToRemove" class="form-control" />
+                    </div>
+                }
+
+         
+
+
+           
+
+            </div>
+        </div>
+        <div class="mb-3 form-group">
+            <input type="submit" class="btn btn-primary" value="@((Model == null || Model.Id == 0) ? "Create" : "Edit")" />
+
+
+            <a asp-action="Index" asp-controller="Products" class="btn btn-warning">Back to list</a>
+        </div>
+    </form>
+
+</div>
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="~/scripts/area/admin/product/productform.js"></script>
+}

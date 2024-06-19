@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Mvc.Rendering;
 using QuickCart.Domain.DTO;
 
 namespace QuickCart.Services
@@ -9,6 +10,7 @@ namespace QuickCart.Services
         ServiceResponse<bool> Delete(int id);
         ServiceResponse<CategoryDTO> FirstOrDefault(int id);
         ServiceResponse<IEnumerable<CategoryDTO>> GetAll();
+        Task<ServiceResponse<IEnumerable<SelectListItem>>> GetAllSelectListItemAsync();
         ServiceResponse<CategoryDTO> Update(CategoryDTO categoryDTO);
     }
 }

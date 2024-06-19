@@ -1,6 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using QuickCart.DataAccess.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using QuickCart.Domain.DTO;
 using QuickCart.Domain.Models;
 using QuickCart.Services;
@@ -8,6 +7,7 @@ using QuickCart.Services;
 namespace QuickCart.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Route("api/Category")]
     public class CategoryController : Controller
     {
    
@@ -38,11 +38,11 @@ namespace QuickCart.Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var result = _service.Create(categoryDto);
+
                 if (result.Success)
                 {
                     TempData["createMesage"] = "Item created successfully!";
                     return RedirectToAction(nameof(Index));
-
                 }
                 TempData["deleteMesage"] = result.Message;
                 return View(categoryDto);
@@ -122,6 +122,18 @@ namespace QuickCart.Web.Areas.Admin.Controllers
 
 
 
+        }
+
+
+        [HttpGet("GetCategories")]
+        public async Task<IActionResult> GetCategories()
+        {
+
+
+            var response =await _service.GetAllSelectListItemAsync();
+  
+            return Json(response);
+           
         }
 
     }

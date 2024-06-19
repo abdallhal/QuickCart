@@ -1,5 +1,8 @@
 ﻿
 using AutoMapper;
+using Azure;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using QuickCart.Domain.DTO;
 using QuickCart.Domain.Models;
 using QuickCart.Repo;
@@ -26,6 +29,19 @@ namespace QuickCart.Services
             var categoryDTOs = _mapper.Map<IEnumerable<CategoryDTO>>(list);
             return ServiceResponse<IEnumerable<CategoryDTO>>.DeliverData(categoryDTOs);
         }
+
+        public async Task<ServiceResponse<IEnumerable<SelectListItem>>> GetAllSelectListItemAsync()
+        {
+            var list =await _unitOfWork.Category.GetAll().ToListAsync();
+            var categories = list.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString(),
+            }).AsEnumerable();
+     
+            return ServiceResponse<IEnumerable<SelectListItem>>.DeliverData(categories);
+        }
+
         public ServiceResponse<CategoryDTO> FirstOrDefault(int id) { 
         
             var obj=_unitOfWork.Category.FirstOrDefault(o=>o.Id == id);

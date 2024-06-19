@@ -1,56 +1,60 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using QuickCart.Domain.DTO;
 using QuickCart.Services;
 
 namespace QuickCart.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("api/SubCategory")]
-    public class SubCategoryController : Controller
+    public class ProductsController : Controller
     {
-        private readonly ISubCategoryService _service;
-        public SubCategoryController(ISubCategoryService service)
-        {
+        private readonly IProductService _service;
 
-            _service = service;
+        public ProductsController(IProductService service)
+        {
+            _service = service; 
+                
         }
         public IActionResult Index()
         {
-            var categories = _service.GetAll();
-            return View(categories.Data);
+            var result = _service.GetAll();
+            if(result!=null && result.Success)
+            {
+                var products = result.Data;
+
+                return View(products);
+            }
+
+            TempData["deleteMesage"] = result?.Message;
+            return View();
+ 
         }
+
+
         public IActionResult Create()
         {
 
-            var createSubCategoryVM = new CreateSubCategoryVM();
-
-            createSubCategoryVM.Categories = _service.GetAllCategory().Data!.Select(c => new SelectListItem
-            {
-                Text = c.Name,
-                Value= c.Id.ToString(), 
-            });
-            return View(createSubCategoryVM);
+            return View("ProductForm");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CreateSubCategoryDTO subCategoryDTO)
+        public IActionResult Create(ProductFormDTO productDTO)
         {
 
             if (ModelState.IsValid)
             {
-                var result = _service.Create(subCategoryDTO);
+                var result = _service.Create(productDTO);
                 if (result.Success)
                 {
                     TempData["createMesage"] = "Item created successfully!";
                     return RedirectToAction(nameof(Index));
+
                 }
                 TempData["deleteMesage"] = result.Message;
-                return View(subCategoryDTO);
+                return View(productDTO);
             }
 
-            return View(subCategoryDTO);
+            return View(productDTO);
         }
 
 
@@ -60,7 +64,7 @@ namespace QuickCart.Web.Areas.Admin.Controllers
             var result = _service.FirstOrDefault(id);
             if (result.Success)
             {
-                return View(result.Data);
+                return View("ProductForm",result.Data);
             }
 
             TempData["deleteMesage"] = result.Message;
@@ -71,24 +75,22 @@ namespace QuickCart.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(SubCategoryDTO categoryDTO)
+        public IActionResult Edit(ProductFormDTO productDTO)
         {
             if (ModelState.IsValid)
             {
 
-
-                var result = _service.Update(categoryDTO);
+               var result = _service.Update(productDTO);
 
                 if (result.Success)
                 {
                     TempData["editMesage"] = "Item edited successfully!";
                     return RedirectToAction(nameof(Index));
-
                 }
 
 
             }
-            return View(categoryDTO);
+            return View(productDTO);
 
         }
 
@@ -123,16 +125,6 @@ namespace QuickCart.Web.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
 
 
-
-        }
-
-        [HttpGet("GetSubCategories/{categoryId}")]
-        public async Task<IActionResult> GetSubCategories(int categoryId)
-        {
-
-            var response = await _service.GetAllSelectListItemAsync(categoryId);
-
-            return Json(response);
 
         }
     }
