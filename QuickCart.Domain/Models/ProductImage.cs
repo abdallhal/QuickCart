@@ -15,7 +15,7 @@ namespace QuickCart.Domain.Models
 
         [ForeignKey(nameof(ProductId))]
         public Product Product { get; set; }
-
+        public bool IsMain { get; set; }
         public bool IsActive { get; set; }  
     }
 }

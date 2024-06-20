@@ -16,19 +16,12 @@ namespace QuickCart.Web.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            var result = _service.GetAll();
-            if(result!=null && result.Success)
-            {
-                var products = result.Data;
-
-                return View(products);
-            }
-
-            TempData["deleteMesage"] = result?.Message;
             return View();
+
  
         }
 
+       
 
         public IActionResult Create()
         {

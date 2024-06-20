@@ -2,13 +2,14 @@ using QuickCart.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using QuickCart.Domain.Mapper;
 using QuickCart.Web.AssemblyHandler;
+using EntityFrameworkCore.UseRowNumberForPaging;
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddAutoMapper(typeof(QuickCartMapper));
 AssemblyHandler.HandlehandleDependencies(builder.Services);
-builder.Services.AddDbContext<QuickCartDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));        
+builder.Services.AddDbContext<QuickCartDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),o=>o.UseRowNumberForPaging()));        
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

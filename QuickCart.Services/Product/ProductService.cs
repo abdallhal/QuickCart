@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using QuickCart.Domain.DTO;
 using QuickCart.Domain.Models;
 using QuickCart.Repo;
+using System.Linq.Dynamic.Core;
 
 namespace QuickCart.Services
 {
@@ -34,6 +35,33 @@ namespace QuickCart.Services
             return ServiceResponse<IEnumerable<ProductDTO>>.DeliverData(productDTOs);
         }
 
+        public ServiceResponse<IEnumerable<ProductDTO>> GetAll(GetAllBaseRequestDTO requestDTO)
+        {
+           
+            var products = _unitOfWork.Product.GetAll();
+
+            if (products.Any())
+            {
+      
+                // Apply search filters
+                var productsAsQueryable = products
+                                       .Where(product => string.IsNullOrWhiteSpace(requestDTO.Search.SearchValue) ||
+                                       requestDTO.Search.SearchValue.ToLower().Contains(product.Name.ToLower())).AsQueryable();
+               new GridDataTable().GetSortedData(ref productsAsQueryable, requestDTO);
+
+                if (productsAsQueryable.Any())
+                {
+                 
+                    var productDTOs = _mapper.Map<IEnumerable<ProductDTO>>(productsAsQueryable);
+                    var result = ServiceResponse<IEnumerable<ProductDTO>>.DeliverData(productDTOs);
+                    result.TotalRecords = products.Count();
+                    return result;
+                }
+            }
+  
+            return ServiceResponse<IEnumerable<ProductDTO>>.DeliverData( new List<ProductDTO>());
+
+        }
 
         public ServiceResponse<ProductFormDTO> FirstOrDefault(int id)
         {
@@ -55,11 +83,11 @@ namespace QuickCart.Services
 
             var filesName = UploadedFiles(productFormDTO.Images!);
 
-            var newImages = filesName.Select(fileName => new ProductImage { Product = product, ImageUrl = fileName }).ToList();
+            var newImages = filesName.Select(fileName => new ProductImage { Product = product, ImageUrl = fileName  ,IsMain }).ToList();
 
             if (newImages.Any())
             {
-              
+
                 foreach (var image in newImages)
                 {
                     product.ProductImages.Add(image);
@@ -154,8 +182,8 @@ namespace QuickCart.Services
                     var oldFilesToRemove = productDTO.FilesNameToRemove.Split(',').ToList();
                     _fileService.RemoveFiles(oldFilesToRemove);
                 }
-                
-         
+
+
                 return ServiceResponse<ProductFormDTO>.DeliverData(productDTO);
             }
             catch (DbUpdateException ex)

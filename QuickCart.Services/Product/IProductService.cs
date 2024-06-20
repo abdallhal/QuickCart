@@ -10,6 +10,7 @@ namespace QuickCart.Services
         ServiceResponse<bool> Delete(int id);
         ServiceResponse<ProductFormDTO> FirstOrDefault(int id);
         ServiceResponse<IEnumerable<ProductDTO>> GetAll();
+     ServiceResponse<IEnumerable<ProductDTO>> GetAll(GetAllBaseRequestDTO requestDTO);
         ServiceResponse<ProductFormDTO> Update(ProductFormDTO productDTO);
     }
 }
