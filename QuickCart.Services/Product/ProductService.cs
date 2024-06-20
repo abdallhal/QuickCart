@@ -83,7 +83,7 @@ namespace QuickCart.Services
 
             var filesName = UploadedFiles(productFormDTO.Images!);
 
-            var newImages = filesName.Select(fileName => new ProductImage { Product = product, ImageUrl = fileName  ,IsMain }).ToList();
+            var newImages = filesName.Select(fileName => new ProductImage { Product = product, ImageUrl = fileName   }).ToList();
 
             if (newImages.Any())
             {
