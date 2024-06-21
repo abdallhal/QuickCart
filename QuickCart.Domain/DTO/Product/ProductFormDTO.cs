@@ -24,8 +24,8 @@ namespace QuickCart.Domain.DTO
         public List<IFormFile>? Images { get; set; }
 
         public List<string>? FilesName { get; set; }
-
-        
         public string? FilesNameToRemove { get; set; }
+
+        public string MainFileName { get; set; }
     }
 }
