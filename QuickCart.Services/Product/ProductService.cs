@@ -223,10 +223,6 @@ namespace QuickCart.Services
         }
 
 
-        public void HandleUploadFiles(Product product)
-        {
-
-        }
     }
 }
 

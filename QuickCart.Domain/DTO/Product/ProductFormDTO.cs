@@ -25,7 +25,5 @@ namespace QuickCart.Domain.DTO
 
         public List<string>? FilesName { get; set; }
         public string? FilesNameToRemove { get; set; }
-
-        public string MainFileName { get; set; }
     }
 }
