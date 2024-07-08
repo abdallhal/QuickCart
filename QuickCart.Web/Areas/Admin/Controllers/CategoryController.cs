@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using QuickCart.Domain.DTO;
-using QuickCart.Domain.Models;
 using QuickCart.Services;
 
 namespace QuickCart.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("api/Category")]
+
     public class CategoryController : Controller
     {
    
@@ -125,16 +123,7 @@ namespace QuickCart.Web.Areas.Admin.Controllers
         }
 
 
-        [HttpGet("GetCategories")]
-        public async Task<IActionResult> GetCategories()
-        {
-
-
-            var response =await _service.GetAllSelectListItemAsync();
-  
-            return Json(response);
-           
-        }
+   
 
     }
 }

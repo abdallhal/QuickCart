@@ -6,7 +6,7 @@ using QuickCart.Services;
 namespace QuickCart.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("api/SubCategory")]
+
     public class SubCategoryController : Controller
     {
         private readonly ISubCategoryService _service;
@@ -126,14 +126,6 @@ namespace QuickCart.Web.Areas.Admin.Controllers
 
         }
 
-        [HttpGet("GetSubCategories/{categoryId}")]
-        public async Task<IActionResult> GetSubCategories(int categoryId)
-        {
-
-            var response = await _service.GetAllSelectListItemAsync(categoryId);
-
-            return Json(response);
-
-        }
+      
     }
 }

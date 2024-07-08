@@ -84,7 +84,7 @@ function removeCurrentImage() {
 function GetCategories() {
  
     $.ajax({
-        url: '/api/Category/GetCategories',
+        url: '/api/Categories/GetCategories',
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
@@ -119,7 +119,7 @@ function GetSubCategories() {
     }
     console.log(selectedCategory);
     $.ajax({
-        url: '/api/SubCategory/GetSubCategories/' + selectedCategory,
+        url: '/api/SubCategories/GetSubCategories/' + selectedCategory,
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
