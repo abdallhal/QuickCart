@@ -296,6 +296,25 @@
 
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script >
+        // content.js
+
+        // Function to blur images
+       
+
+        // Initial blur on page load
+        blurImages();
+
+        // Listen for DOM changes and blur images again if necessary
+        document.addEventListener('DOMContentLoaded', blurImages);
+
+        // Listen for changes in the page (e.g., navigation)
+        window.addEventListener('load', blurImages);
+
+        // Listen for AJAX and other dynamic content changes
+        document.addEventListener('DOMNodeInserted', blurImages);
+
+    </script>
 
     <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
