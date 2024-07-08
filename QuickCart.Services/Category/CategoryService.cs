@@ -1,6 +1,5 @@
 ﻿
 using AutoMapper;
-using Azure;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QuickCart.Domain.DTO;
@@ -28,6 +27,35 @@ namespace QuickCart.Services
             var list = _unitOfWork.Category.GetAll();
             var categoryDTOs = _mapper.Map<IEnumerable<CategoryDTO>>(list);
             return ServiceResponse<IEnumerable<CategoryDTO>>.DeliverData(categoryDTOs);
+        }
+
+
+        public ServiceResponse<IEnumerable<CategoryDTO>> GetAll(GetAllCategoryRequestDTO requestDTO)
+        {
+
+            var categories = _unitOfWork.Category.GetAll();
+
+            if (categories.Any())
+            {
+
+                // Apply search filters
+                var categoriesAsQueryable = categories
+                                       .Where(category => string.IsNullOrWhiteSpace(requestDTO.Search.SearchValue) ||
+                                       requestDTO.Search.SearchValue.ToLower().Contains(category.Name.ToLower())).AsQueryable();
+                new GridDataTable().GetSortedData(ref categoriesAsQueryable, requestDTO);
+
+                if (categoriesAsQueryable.Any())
+                {
+
+                    var productDTOs = _mapper.Map<IEnumerable<CategoryDTO>>(categoriesAsQueryable);
+                    var result = ServiceResponse<IEnumerable<CategoryDTO>>.DeliverData(productDTOs);
+                    result.TotalRecords = categories.Count();
+                    return result;
+                }
+            }
+
+            return ServiceResponse<IEnumerable<CategoryDTO>>.DeliverData(new List<CategoryDTO>());
+
         }
 
         public async Task<ServiceResponse<IEnumerable<SelectListItem>>> GetAllSelectListItemAsync()

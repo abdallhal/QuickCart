@@ -8,11 +8,9 @@ namespace QuickCart.Web.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductService _service;
-
         public ProductsController(IProductService service)
         {
             _service = service; 
-                
         }
         public IActionResult Index()
         {
@@ -44,10 +42,10 @@ namespace QuickCart.Web.Areas.Admin.Controllers
 
                 }
                 TempData["deleteMesage"] = result.Message;
-                return View(productDTO);
+                return View("ProductForm", productDTO);
             }
 
-            return View(productDTO);
+            return View("ProductForm", productDTO);
         }
 
 

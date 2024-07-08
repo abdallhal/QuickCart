@@ -1,0 +1,55 @@
+﻿@model SubCategoryFormDTO;
+
+@{
+    ViewBag.PageTitle = "SubCategory Mangment";
+    ViewBag.CardTitle = (Model == null || Model.Id == 0) ? "Create" : "Edit";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="@ViewBag.CardTitle"  method="post">
+
+            <input hidden asp-for="Id" />
+            <div class="mb-3">
+
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="Description"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+
+            <div class="mb-3 form-group">
+                @if (Model != null)
+                {
+                    <input type="hidden" id="selectedCategoryId" value="@Model.CategoryId">
+                }
+
+
+                <label asp-for="CategoryId" class="col-form-label"></label>
+                <select id="categoryList" asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(string.Empty,"Id","Name"))">
+                </select>
+                <span class="text-danger" asp-validation-for="CategoryId"></span>
+
+            </div>
+            <div class="mb-3 form-group">
+                <input type="submit" class="btn btn-primary" value="@((Model == null || Model.Id == 0) ? "Create" : "Edit")" />
+
+                <a asp-action="Index" asp-controller="SubCategory" class="btn btn-warning">Back to list</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/scripts/area/admin/subcategory/subcategoryform.js"></script>
+}

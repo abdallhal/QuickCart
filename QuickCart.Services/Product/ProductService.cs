@@ -26,15 +26,6 @@ namespace QuickCart.Services
 
 
 
-
-
-        public ServiceResponse<IEnumerable<ProductDTO>> GetAll()
-        {
-            var list = _unitOfWork.Product.GetAll();
-            var productDTOs = _mapper.Map<IEnumerable<ProductDTO>>(list);
-            return ServiceResponse<IEnumerable<ProductDTO>>.DeliverData(productDTOs);
-        }
-
         public ServiceResponse<IEnumerable<ProductDTO>> GetAll(GetAllBaseRequestDTO requestDTO)
         {
            

@@ -7,12 +7,12 @@ namespace QuickCart.Services
 {
     public interface ISubCategoryService
     {
-        ServiceResponse<CreateSubCategoryDTO> Create(CreateSubCategoryDTO createSubCategoryDTO);
+        ServiceResponse<SubCategoryFormDTO> Create(SubCategoryFormDTO createSubCategoryDTO);
         ServiceResponse<bool> Delete(int id);
-        ServiceResponse<SubCategoryDTO> FirstOrDefault(int id);
+        ServiceResponse<SubCategoryFormDTO> FirstOrDefault(int id);
         ServiceResponse<IEnumerable<SubCategoryDTO>> GetAll();
         ServiceResponse<IEnumerable<CategoryDTO>> GetAllCategory();
         Task<ServiceResponse<IEnumerable<SelectListItem>>> GetAllSelectListItemAsync(int categoryId);
-        ServiceResponse<SubCategoryDTO> Update(SubCategoryDTO categoryDTO);
+        ServiceResponse<SubCategoryFormDTO> Update(SubCategoryFormDTO categoryDTO);
     }
 }

@@ -2,13 +2,13 @@
 
 @{
     ViewBag.PageTitle = "Category Mangment";
-    ViewBag.CardTitle = "Edit ";
+    ViewBag.CardTitle = (Model == null || Model.Id == 0) ? "Create" : "Edit";
     Layout = "~/Views/Shared/_Dashboard.cshtml";
 }
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" method="post">
+        <form asp-action="@ViewBag.CardTitle" method="post">
 
             <input hidden asp-for="Id" />
             <div class="mb-3">
@@ -25,7 +25,7 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="mb-3 form-group">
-                <input type="submit" class="btn btn-primary" value="Edit" />
+                <input type="submit" class="btn btn-primary" value="@((Model == null || Model.Id == 0) ? "Create" : "Edit")" />
 
                 <a asp-action="Index" asp-controller="Category" class="btn btn-warning">Back to list</a>
             </div>

@@ -9,8 +9,6 @@ namespace QuickCart.Web.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
    
-      
-
         private readonly ICategoryService _service;
         public CategoryController( ICategoryService service)
         {
@@ -25,7 +23,7 @@ namespace QuickCart.Web.Areas.Admin.Controllers
         public IActionResult Create()
         {
 
-            return View();
+            return View("CategoryForm");
         }
 
         [HttpPost]
@@ -43,7 +41,7 @@ namespace QuickCart.Web.Areas.Admin.Controllers
                     return RedirectToAction(nameof(Index));
                 }
                 TempData["deleteMesage"] = result.Message;
-                return View(categoryDto);
+                return View("CategoryForm", categoryDto);
             }
 
             return View(categoryDto);
@@ -56,11 +54,11 @@ namespace QuickCart.Web.Areas.Admin.Controllers
             var result = _service.FirstOrDefault(id);
             if (result.Success)
             {
-                return View(result.Data);
+                return View("CategoryForm", result.Data);
             }
 
             TempData["deleteMesage"] = result.Message;
-            return View();
+            return View("CategoryForm");
 
         }
 

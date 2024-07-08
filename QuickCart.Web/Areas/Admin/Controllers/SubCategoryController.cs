@@ -12,7 +12,6 @@ namespace QuickCart.Web.Areas.Admin.Controllers
         private readonly ISubCategoryService _service;
         public SubCategoryController(ISubCategoryService service)
         {
-
             _service = service;
         }
         public IActionResult Index()
@@ -23,19 +22,12 @@ namespace QuickCart.Web.Areas.Admin.Controllers
         public IActionResult Create()
         {
 
-            var createSubCategoryVM = new CreateSubCategoryVM();
-
-            createSubCategoryVM.Categories = _service.GetAllCategory().Data!.Select(c => new SelectListItem
-            {
-                Text = c.Name,
-                Value= c.Id.ToString(), 
-            });
-            return View(createSubCategoryVM);
+            return View("SubCategoryForm");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CreateSubCategoryDTO subCategoryDTO)
+        public IActionResult Create(SubCategoryFormDTO subCategoryDTO)
         {
 
             if (ModelState.IsValid)
@@ -47,7 +39,7 @@ namespace QuickCart.Web.Areas.Admin.Controllers
                     return RedirectToAction(nameof(Index));
                 }
                 TempData["deleteMesage"] = result.Message;
-                return View(subCategoryDTO);
+                return View("SubCategoryForm", subCategoryDTO);
             }
 
             return View(subCategoryDTO);
@@ -60,18 +52,18 @@ namespace QuickCart.Web.Areas.Admin.Controllers
             var result = _service.FirstOrDefault(id);
             if (result.Success)
             {
-                return View(result.Data);
+                return View("SubCategoryForm", result.Data);
             }
 
             TempData["deleteMesage"] = result.Message;
-            return View();
+            return View("SubCategoryForm");
 
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(SubCategoryDTO categoryDTO)
+        public IActionResult Edit(SubCategoryFormDTO categoryDTO)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +80,7 @@ namespace QuickCart.Web.Areas.Admin.Controllers
 
 
             }
-            return View(categoryDTO);
+            return View("SubCategoryForm", categoryDTO);
 
         }
 

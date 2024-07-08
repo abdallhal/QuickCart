@@ -10,6 +10,7 @@ namespace QuickCart.Services
         ServiceResponse<bool> Delete(int id);
         ServiceResponse<CategoryDTO> FirstOrDefault(int id);
         ServiceResponse<IEnumerable<CategoryDTO>> GetAll();
+        ServiceResponse<IEnumerable<CategoryDTO>> GetAll(GetAllCategoryRequestDTO requestDTO);
         Task<ServiceResponse<IEnumerable<SelectListItem>>> GetAllSelectListItemAsync();
         ServiceResponse<CategoryDTO> Update(CategoryDTO categoryDTO);
     }

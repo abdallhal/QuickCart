@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QuickCart.Domain.DTO
 {
-    public class CreateSubCategoryDTO
+    public class SubCategoryFormDTO
     {
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }

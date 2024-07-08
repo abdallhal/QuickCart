@@ -51,47 +51,47 @@ namespace QuickCart.Services
 
             return ServiceResponse<IEnumerable<SelectListItem>>.DeliverData(categories);
         }
-        public ServiceResponse<SubCategoryDTO> FirstOrDefault(int id)
+        public ServiceResponse<SubCategoryFormDTO> FirstOrDefault(int id)
         {
 
             var subCategory = _unitOfWork.SubCategory.FirstOrDefault(o => o.Id == id);
 
             if (subCategory == null)
             {
-                return ServiceResponse<SubCategoryDTO>.ReportError("Invalid category");
+                return ServiceResponse<SubCategoryFormDTO>.ReportError("Invalid category");
             }
-            var data = _mapper.Map<SubCategoryDTO>(subCategory);
-            return ServiceResponse<SubCategoryDTO>.DeliverData(data);
+            var data = _mapper.Map<SubCategoryFormDTO>(subCategory);
+            return ServiceResponse<SubCategoryFormDTO>.DeliverData(data);
         }
-        public ServiceResponse<CreateSubCategoryDTO> Create(CreateSubCategoryDTO createSubCategoryDTO)
+        public ServiceResponse<SubCategoryFormDTO> Create(SubCategoryFormDTO createSubCategoryDTO)
         {
 
             if (createSubCategoryDTO == null)
             {
-                return ServiceResponse<CreateSubCategoryDTO>.ReportError("category is null");
+                return ServiceResponse<SubCategoryFormDTO>.ReportError("category is null");
             }
             var subCategory = _mapper.Map<SubCategory>(createSubCategoryDTO);
             _unitOfWork.SubCategory.Add(subCategory);
             _unitOfWork.Complete();
-            return ServiceResponse<CreateSubCategoryDTO>.DeliverData(createSubCategoryDTO);
+            return ServiceResponse<SubCategoryFormDTO>.DeliverData(createSubCategoryDTO);
 
         }
 
-        public ServiceResponse<SubCategoryDTO> Update(SubCategoryDTO categoryDTO)
+        public ServiceResponse<SubCategoryFormDTO> Update(SubCategoryFormDTO categoryDTO)
         {
 
             var subCategory = _unitOfWork.SubCategory.FirstOrDefault(c => c.Id == categoryDTO.Id);
 
             if (subCategory == null)
             {
-                return ServiceResponse<SubCategoryDTO>.ReportError("category is null");
+                return ServiceResponse<SubCategoryFormDTO>.ReportError("category is null");
             }
 
             _mapper.Map(categoryDTO, subCategory);
 
             _unitOfWork.SubCategory.Update(subCategory);
             _unitOfWork.Complete();
-            return ServiceResponse<SubCategoryDTO>.DeliverData(categoryDTO);
+            return ServiceResponse<SubCategoryFormDTO>.DeliverData(categoryDTO);
 
         }
 
