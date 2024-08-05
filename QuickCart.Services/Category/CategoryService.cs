@@ -42,7 +42,7 @@ namespace QuickCart.Services
                 var categoriesAsQueryable = categories
                                        .Where(category => string.IsNullOrWhiteSpace(requestDTO.Search.SearchValue) ||
                                        requestDTO.Search.SearchValue.ToLower().Contains(category.Name.ToLower())).AsQueryable();
-                new GridDataTable().GetSortedData(ref categoriesAsQueryable, requestDTO);
+                new GridDataTable().GetDataSortedAndPaginated(ref categoriesAsQueryable, requestDTO);
 
                 if (categoriesAsQueryable.Any())
                 {

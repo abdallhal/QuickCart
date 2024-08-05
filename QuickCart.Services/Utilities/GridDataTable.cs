@@ -57,7 +57,7 @@ namespace QuickCart.Services
 
             return result;
         }
-        public void GetSortedData<T>(ref IQueryable<T> dataCollection, GetAllBaseRequestDTO requestDTO, string defaultColumn = "Id") where T : class
+        public void GetDataSortedAndPaginated<T>(ref IQueryable<T> dataCollection, GetAllBaseRequestDTO requestDTO, string defaultColumn = "Id") where T : class
         {
             if (dataCollection.Any())
             {
