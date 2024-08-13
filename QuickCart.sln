@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickCart.Web", "QuickCart.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickCart.Services", "QuickCart.Services\QuickCart.Services.csproj", "{8B5A1A08-13C9-44E2-A310-BD52C0A3FE30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickCart.Repo", "QuickCart.Repo\QuickCart.Repo.csproj", "{01448FF1-F4B7-426A-B7DF-3F98BB739195}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickCart.Repo", "QuickCart.Repo\QuickCart.Repo.csproj", "{01448FF1-F4B7-426A-B7DF-3F98BB739195}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
