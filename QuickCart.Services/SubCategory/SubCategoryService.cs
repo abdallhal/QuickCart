@@ -33,12 +33,35 @@ namespace QuickCart.Services
 
 
 
-        public ServiceResponse<IEnumerable<CategoryDTO>> GetAllCategory()
+        public ServiceResponse<IEnumerable<SubCategoryDTO>> GetAll(GetAllSubCategoryRequestDTO requestDTO)
         {
-            var list = _unitOfWork.Category.GetAll();
-            var result = _mapper.Map<IEnumerable<CategoryDTO>>(list);
-            return ServiceResponse<IEnumerable<CategoryDTO>>.DeliverData(result);
+
+            var subCategories = _unitOfWork.SubCategory.GetAll();
+
+            if (subCategories.Any())
+            {
+
+                // Apply search filters
+                var categoriesAsQueryable = subCategories
+                                       .Where(category => string.IsNullOrWhiteSpace(requestDTO.Search.SearchValue) ||
+                                       requestDTO.Search.SearchValue.ToLower().Contains(category.Name.ToLower())).AsQueryable();
+                new GridDataTable().GetDataSortedAndPaginated(ref categoriesAsQueryable, requestDTO);
+
+                if (categoriesAsQueryable.Any())
+                {
+
+                    var productDTOs = _mapper.Map<IEnumerable<SubCategoryDTO>>(categoriesAsQueryable);
+                    var result = ServiceResponse<IEnumerable<SubCategoryDTO>>.DeliverData(productDTOs);
+                    result.TotalRecords = subCategories.Count();
+                    return result;
+                }
+            }
+
+            return ServiceResponse<IEnumerable<SubCategoryDTO>>.DeliverData(new List<SubCategoryDTO>());
+
         }
+
+
 
         public async Task<ServiceResponse<IEnumerable<SelectListItem>>> GetAllSelectListItemAsync(int categoryId)
         {

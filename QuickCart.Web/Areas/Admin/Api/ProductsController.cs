@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using QuickCart.Domain.DTO;
+using QuickCart.Domain.Enums;
 using QuickCart.Services;
 
 namespace QuickCart.Web.Areas.Admin.Api
@@ -17,18 +18,28 @@ namespace QuickCart.Web.Areas.Admin.Api
             _service = service;   
         }
 
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        [HttpPost("GetAll")]
+        public IActionResult GetAll(DataTablesRequest  dataTablesRequest)
         {
             try
             {
-                var queryParameters = HttpContext.Request.Query;
-                var queryValues = new GridDataTable().GetQueryNameValuePairs(queryParameters);
+         
                 var requestDTO = new GetAllBaseRequestDTO
                 {
-                    Pagination = queryValues.Pagination,
-                    Search = queryValues.Search,
-                    Order = queryValues.Order,
+                    Pagination = new Pagination
+                    {
+                        Skip = dataTablesRequest.Start,
+                        PageSize = dataTablesRequest.Length
+                    },
+                    Search = new Search
+                    {
+                        SearchValue = dataTablesRequest.Search.Value
+                    },
+                    Order = new OrderColumn
+                    {
+                        ColumnName = dataTablesRequest.Columns[dataTablesRequest.Order[0].Column].Data,
+                        Direction = dataTablesRequest.Order[0].Dir.Equals("asc", StringComparison.OrdinalIgnoreCase) ? SortDirectionEnum.Ascending : SortDirectionEnum.Descending
+                    }
                 };
                 var result =  _service.GetAll(requestDTO);
                 var TotalRecords = result.TotalRecords;

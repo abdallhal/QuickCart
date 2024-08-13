@@ -30,7 +30,7 @@ namespace QuickCart.Services
         }
 
 
-        public ServiceResponse<IEnumerable<CategoryDTO>> GetAll(GetAllCategoryRequestDTO requestDTO)
+        public ServiceResponse<IEnumerable<CategoryDTO>> GetAll(GetAllSubCategoryRequestDTO requestDTO)
         {
 
             var categories = _unitOfWork.Category.GetAll();

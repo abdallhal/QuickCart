@@ -67,8 +67,8 @@ namespace QuickCart.Services
                     Direction = requestDTO.Order.IsSortingEnabled ? requestDTO.Order.Direction : SortDirectionEnum.Descending
                 };
 
-                var pageList = new PageList<T>(dataCollection);
-                pageList.Sort( sortData);
+              var pageList = new PageList<T>(dataCollection);
+              pageList.Sort( sortData);
               pageList.ApplyPagination( requestDTO.Pagination.Skip, requestDTO.Pagination.PageSize);
 
                 dataCollection = pageList.DataSource;

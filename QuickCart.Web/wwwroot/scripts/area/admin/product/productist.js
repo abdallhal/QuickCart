@@ -3,24 +3,11 @@ function initializeDataTable() {
     $('#productDataTable').DataTable({
         "processing": true,
         "serverSide": true,
-        "ajax": {
-            "url": "/api/Products/GetAll",
-            "type": 'GET',
-            "dataSrc": function (json) {
 
-                var data = json.data;
-                if (Array.isArray(data)) {
-                    return data;
-                }
-                console.error('Unexpected JSON structure:', json);
-                return [];
-            },
-            "error": function (xhr, status, error) {
-                console.error(`Error: ${error}`);
-                console.error(`Status: ${status}`);
-                console.error(`Response: ${xhr.responseText}`);
-            }
+        "ajax": function (data, callback, settings) {
+            GetAllProduct(data, callback, settings);
         },
+
         "columnDefs": [
             {
                 "targets": [0],
@@ -53,6 +40,22 @@ function initializeDataTable() {
     });
 }
 
+function GetAllProduct(data, callback, settings) {
+    $.ajax({
+        "url": "/api/Products/GetAll",
+        "type": 'POST',
+        "contentType": 'application/json',
+        "dataType": 'json',
+        "data": JSON.stringify(data),
+        "success": function (response) {
+            callback(response);
+        },
+        "error": function (xhr, status, error) {
+            // Handle error here
+            console.error('Error fetching data:', error);
+        }
+    });
+}
 $(document).ready(function () {
     initializeDataTable();
 });

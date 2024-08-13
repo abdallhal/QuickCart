@@ -1,12 +1,11 @@
 // start initialize Data Table
 function initializeDataTable() {
-    $('#productDataTable').DataTable({
+    $('#subCategoryDataTable').DataTable({
         "processing": true,
         "serverSide": true,
         "ajax": function (data, callback, settings) {
-            GetAllCategory(data, callback, settings);
+            GetSubAllCategory(data, callback, settings);
         },
-   
         "columnDefs": [
             {
                 "targets": [0],
@@ -28,9 +27,9 @@ function initializeDataTable() {
                 "orderable": false,
                 "render": function (data, type, row) {
                     return `
-                        <div class="btn-group" role="group" aria-label="Products Actions">
-                            <a href="Products/Edit/${row.id}" class="btn btn-success m-2">Edit</a>
-                            <a href="Products/Delete/${row.id}" class="btn btn-danger m-2">Delete</a>
+                        <div class="btn-group" role="group" aria-label="SubCategories Actions">
+                            <a href="SubCategories/Edit/${row.id}" class="btn btn-success m-2">Edit</a>
+                            <a href="SubCategories/Delete/${row.id}" class="btn btn-danger m-2">Delete</a>
                         </div>
                     `;
                 }
@@ -38,10 +37,9 @@ function initializeDataTable() {
         ]
     });
 }
-
-function GetAllCategory(data, callback, settings) {
+function GetSubAllCategory(data, callback, settings) {
     $.ajax({
-        "url": "/api/Categories/GetAll",
+        "url": "/api/SubCategories/GetAll",
         "type": 'POST',
         "contentType": 'application/json',
         "dataType": 'json',
@@ -55,7 +53,6 @@ function GetAllCategory(data, callback, settings) {
         }
     });
 }
-
 $(document).ready(function () {
     initializeDataTable();
 });

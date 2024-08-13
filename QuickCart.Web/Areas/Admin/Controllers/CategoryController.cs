@@ -17,8 +17,8 @@ namespace QuickCart.Web.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            var categories = _service.GetAll();
-            return View(categories.Data);
+       
+            return View();
         }
         public IActionResult Create()
         {
